@@ -1,11 +1,6 @@
 import { useState } from 'react';  
 
 function Square({ value, onSquareClick }) {
-  // const [value, setValue] = useState(null);
-
-  function handleClick() {
-    setValue('X');
-  }
 
   return <button 
             className="square"
@@ -16,11 +11,20 @@ function Square({ value, onSquareClick }) {
 }
 
 export default function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
+    if (squares[i]) {
+      return;
+    }
     const nextSquares = squares.slice(); // squaresをコピー
-    nextSquares[i] = "X";
+    if(xIsNext){
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "O";
+    }
+    setXIsNext(!xIsNext);
     setSquares(nextSquares);
   }
   return (
