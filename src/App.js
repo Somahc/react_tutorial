@@ -136,6 +136,19 @@ export default function Game() {
     setIsAscending(!isAscending);
   }
 
+  function calculateClickedSquare(move) {
+    if(move === 0){
+      return null;
+    }
+    const current = history[move];
+    const prev = history[move - 1];
+    for(let i = 0; i < current.length; i++){
+      if(current[i] !== prev[i]){
+        return i;
+      }
+    }
+  }
+
   let sortedMoves = [...history.keys()].slice();
   if(!isAscending){
     sortedMoves = sortedMoves.reverse();
@@ -144,7 +157,7 @@ export default function Game() {
   const moves = sortedMoves.map((move) => {
     let description;
     if (move > 0) {
-      description = 'Go to move #' + move;
+      description = 'Go to move #' + move + ' (' + Math.floor(calculateClickedSquare(move) / 3) + ', ' + calculateClickedSquare(move) % 3 + ')';
     } else {
       description = 'Go to game start';
     }
@@ -162,7 +175,7 @@ export default function Game() {
       <div className="game-info">
         <ol><button onClick={toggleSortMode}>Toggle Sort Mode</button></ol>
         <ol>{moves}</ol>
-        <ol>You are at move # {history.length}</ol>
+        <ol>You are at move #{history.length}</ol>
       </div>
     </div>
   )
