@@ -114,6 +114,7 @@ export default function Game() {
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
+        <ol>You are at move # {history.length}</ol>
       </div>
     </div>
   )
